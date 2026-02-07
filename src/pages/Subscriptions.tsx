@@ -3,27 +3,24 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Plus, Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, getSubUI } from '@/lib/utils';
 import { AddSubscriptionModal } from '@/components/subscriptions/AddSubscriptionModal';
+import { CancelSubscriptionModal } from '@/components/subscriptions/CancelSubscriptionModal';
 import { useSubscriptions } from '@/context/SubscriptionContext';
-
-// Helper to generate UI props for subs
-const getSubUI = (name: string) => {
-    const n = name.toLowerCase();
-    if (n.includes('netflix')) return { color: 'bg-red-600', logo: 'N' };
-    if (n.includes('spotify')) return { color: 'bg-green-500', logo: 'S' };
-    if (n.includes('adobe')) return { color: 'bg-blue-600', logo: 'A' };
-    if (n.includes('prime') || n.includes('amazon')) return { color: 'bg-blue-400', logo: 'P' };
-    if (n.includes('gpt') || n.includes('openai')) return { color: 'bg-emerald-600', logo: 'O' };
-    return { color: 'bg-indigo-600', logo: name.charAt(0).toUpperCase() };
-};
 
 export const Subscriptions = () => {
   const { subscriptions } = useSubscriptions();
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  
+  // Cancel Logic State
+  const [cancelModalOpen, setCancelModalOpen] = useState(false);
+  const [selectedSubForCancel, setSelectedSubForCancel] = useState<{id: string, name: string} | null>(null);
 
-  // Filter subscriptions based on search
+  const initiateCancel = (id: string, name: string) => {
+    setSelectedSubForCancel({ id, name });
+    setCancelModalOpen(true);
+  };
   const filteredSubs = subscriptions.filter(sub => 
     sub.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     (sub.category || '').toLowerCase().includes(searchTerm.toLowerCase())
@@ -93,8 +90,15 @@ export const Subscriptions = () => {
                 </div>
 
                 <div className="mt-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button size="sm" variant="secondary" className="flex-1">Manage</Button>
                 <Button size="sm" variant="outline" className="flex-1">Details</Button>
+                <Button 
+                    size="sm" 
+                    variant="destructive" 
+                    className="flex-1"
+                    onClick={() => initiateCancel(sub.id, sub.name)}
+                >
+                    Cancel Plan
+                </Button>
                 </div>
             </Card>
           );
@@ -104,6 +108,13 @@ export const Subscriptions = () => {
       <AddSubscriptionModal 
         isOpen={isAddModalOpen} 
         onClose={() => setIsAddModalOpen(false)} 
+      />
+
+      <CancelSubscriptionModal
+        isOpen={cancelModalOpen}
+        onClose={() => setCancelModalOpen(false)}
+        subscriptionId={selectedSubForCancel?.id || null}
+        subscriptionName={selectedSubForCancel?.name || ''}
       />
     </div>
   );
