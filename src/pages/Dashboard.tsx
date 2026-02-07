@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DashboardStats } from '@/components/dashboard/DashboardStats';
 import { SubscriptionList } from '@/components/dashboard/SubscriptionList';
+import { YieldVaultCard } from '@/components/dashboard/YieldVaultCard';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Plus, Sparkles } from 'lucide-react';
@@ -41,27 +42,7 @@ export const Dashboard = () => {
         </div>
         
         <div className="lg:col-span-1 space-y-8">
-            <Card className="relative overflow-hidden">
-                <h3 className="font-semibold mb-4 z-10 relative">Yield Vault Performance</h3>
-                <div className="h-48 bg-black/20 rounded-xl flex items-center justify-center border border-white/5 relative overflow-hidden group cursor-pointer hover:border-white/10 transition-colors">
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-500/10 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 right-0 h-full flex items-end justify-center pb-8 opacity-50">
-                        {/* CSS Chart */}
-                        <div className="flex items-end gap-2 h-32">
-                           <div className="w-3 bg-blue-500/40 rounded-t-sm h-[40%]"></div>
-                           <div className="w-3 bg-blue-500/50 rounded-t-sm h-[60%]"></div>
-                           <div className="w-3 bg-blue-500/60 rounded-t-sm h-[50%]"></div>
-                           <div className="w-3 bg-blue-500/70 rounded-t-sm h-[70%]"></div>
-                           <div className="w-3 bg-blue-500/80 rounded-t-sm h-[85%]"></div>
-                           <div className="w-3 bg-blue-500 rounded-t-sm h-[95%]"></div>
-                        </div>
-                    </div>
-                </div>
-                <div className="mt-4 flex justify-between text-sm items-center">
-                    <span className="text-gray-400">Current APY</span>
-                    <span className="text-emerald-400 font-bold bg-emerald-400/10 px-2 py-1 rounded-md">5.2%</span>
-                </div>
-            </Card>
+            <YieldVaultCard />
 
             <Card className="bg-gradient-to-br from-indigo-900/50 to-purple-900/50 border-indigo-500/20 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-3 opacity-20">
