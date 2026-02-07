@@ -1,6 +1,7 @@
 import { TrendingUp, TrendingDown, DollarSign, Calendar } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { formatCurrency } from '@/lib/utils';
+import { useSubscriptions } from '@/context/SubscriptionContext';
 
 interface StatsCardProps {
   label: string;
@@ -30,6 +31,16 @@ const StatsCard = ({ label, value, trend, icon: Icon, subValue }: StatsCardProps
 );
 
 export const DashboardStats = () => {
+  const { totalMonthlySpend, subscriptions } = useSubscriptions();
+
+  // Simulated calculations
+  const totalBudget = 2500;
+  const remainingBudget = Math.max(0, totalBudget - totalMonthlySpend - 1850); // 1850 for other expenses
+  
+  // Proj yearly yield based on 5% APY of remaining monthly * 12
+  const yearlySavings = remainingBudget * 12;
+  const projectedYield = yearlySavings * 0.05;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <StatsCard 
@@ -40,22 +51,22 @@ export const DashboardStats = () => {
         subValue="Available in yield vault"
       />
       <StatsCard 
-        label="Monthly Spend" 
-        value={249.99} 
+        label="Monthly Cost" 
+        value={totalMonthlySpend} 
         trend={-5.2} 
         icon={Calendar}
-        subValue="Across 8 subscriptions" 
+        subValue={`Across ${subscriptions.length} subscriptions`} 
       />
       <StatsCard 
-        label="Total Saved" 
-        value={1240.50} 
+        label="Proj. Savings" 
+        value={yearlySavings} 
         trend={12.4} 
         icon={TrendingUp}
-        subValue="From prepaid discounts" 
+        subValue="Annual projection" 
       />
       <StatsCard 
-        label="Proj. Yearly Yield" 
-        value={622.50} 
+        label="Est. Yield" 
+        value={projectedYield} 
         trend={0} 
         icon={TrendingUp}
         subValue="~5.0% APY" 

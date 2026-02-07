@@ -1,19 +1,18 @@
 import React from 'react';
 import { Card } from '@/components/ui/Card';
 import { formatCurrency } from '@/lib/utils';
+import { useSubscriptions } from '@/context/SubscriptionContext';
 import { 
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip, 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend 
 } from 'recharts';
-import { TrendingUp, AlertCircle, CheckCircle2, DollarSign, Wallet } from 'lucide-react';
+import { TrendingUp, AlertCircle, CheckCircle2, DollarSign, Wallet, PiggyBank } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
-// Mock Data
-const SPENDING_DATA = [
-  { name: 'Subscriptions', value: 245, color: '#3b82f6' },
+// Mock Data (Static parts)
+const OTHER_SPENDING = [
   { name: 'Recurring (Rent/Utils)', value: 1200, color: '#8b5cf6' },
   { name: 'Day-to-day (Food/Transport)', value: 650, color: '#10b981' },
-  { name: 'Savings', value: 400, color: '#f59e0b' },
 ];
 
 const MONTHLY_TREND_DATA = [
@@ -50,9 +49,31 @@ const INSIGHTS = [
 ];
 
 export const Analytics = () => {
-  const totalBudget = 2500;
-  const currentSpend = 2095;
+  const { totalMonthlySpend } = useSubscriptions();
+  const totalBudget = 2500; // This could be made editable later
+
+  // Construct Spending Data dynamically
+  const spendingData = [
+    { name: 'Subscriptions', value: Math.round(totalMonthlySpend), color: '#3b82f6' },
+    ...OTHER_SPENDING
+  ];
+
+  const currentSpend = spendingData.reduce((acc, curr) => acc + curr.value, 0);
+  const savings = Math.max(0, totalBudget - currentSpend);
+  
+  // Add Savings to the chart if positive
+  if (savings > 0) {
+      spendingData.push({ name: 'Remaining/Savings', value: savings, color: '#f59e0b' });
+  }
+
   const percentage = Math.round((currentSpend / totalBudget) * 100);
+  
+  // Yield Calculation (Simulated 5% APY on monthly savings compounded annually? Or just simple annual projection)
+  // Let's do simple annual projection + Yield
+  const annualSavings = savings * 12;
+  const yieldRate = 0.05;
+  const investmentYield = annualSavings * yieldRate;
+  const totalProjected = annualSavings + investmentYield;
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
@@ -77,7 +98,7 @@ export const Analytics = () => {
             <h3 className="text-2xl font-bold">{formatCurrency(totalBudget)}</h3>
           </div>
           <div className="mt-4 w-full bg-blue-950 rounded-full h-1.5 overflow-hidden">
-            <div className="bg-blue-400 h-full rounded-full" style={{ width: `${percentage}%` }}></div>
+            <div className="bg-blue-400 h-full rounded-full" style={{ width: `${Math.min(percentage, 100)}%` }}></div>
           </div>
           <p className="text-xs text-blue-300 mt-2">{percentage}% utilized</p>
         </Card>
@@ -94,7 +115,7 @@ export const Analytics = () => {
           </div>
            <div className="mt-4 flex items-center gap-2 text-sm text-emerald-400">
              <CheckCircle2 size={14} />
-             <span>On track to save {formatCurrency(totalBudget - currentSpend)}</span>
+             <span>{savings > 0 ? `On track to save ${formatCurrency(savings)}` : 'Over budget'}</span>
            </div>
         </Card>
 
@@ -103,13 +124,17 @@ export const Analytics = () => {
              <div className="p-3 bg-emerald-500/20 rounded-xl">
               <TrendingUp className="text-emerald-400" size={24} />
             </div>
+            <span className="text-xs font-medium bg-emerald-500/10 text-emerald-300 px-2 py-1 rounded-full">
+              5% APY Sim
+            </span>
           </div>
            <div className="space-y-1">
-            <p className="text-gray-400 text-sm">Projected Savings</p>
-            <h3 className="text-2xl font-bold">{formatCurrency(4860)}</h3>
+            <p className="text-gray-400 text-sm">Projected Annual Wealth</p>
+            <h3 className="text-2xl font-bold">{formatCurrency(totalProjected)}</h3>
           </div>
            <div className="mt-4 flex items-center gap-2 text-sm text-gray-400">
-             <span>Annual projection based on current habits</span>
+             <PiggyBank size={14} className="text-emerald-400"/>
+             <span><span className="text-emerald-400">+{formatCurrency(investmentYield)}</span> from simulated yields</span>
            </div>
         </Card>
       </div>
@@ -124,7 +149,7 @@ export const Analytics = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
-                    data={SPENDING_DATA}
+                    data={spendingData}
                     cx="50%"
                     cy="50%"
                     innerRadius={60}
@@ -132,7 +157,7 @@ export const Analytics = () => {
                     paddingAngle={5}
                     dataKey="value"
                   >
-                    {SPENDING_DATA.map((entry, index) => (
+                    {spendingData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} strokeWidth={0} />
                     ))}
                   </Pie>
@@ -146,7 +171,7 @@ export const Analytics = () => {
               </ResponsiveContainer>
             </div>
             <div className="space-y-4">
-              {SPENDING_DATA.map((item) => (
+              {spendingData.map((item) => (
                 <div key={item.name} className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors">
                   <div className="flex items-center gap-3">
                     <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />

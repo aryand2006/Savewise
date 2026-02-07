@@ -4,11 +4,13 @@ import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Sparkles, Loader2, Check } from 'lucide-react';
 import { cn, formatCurrency } from '@/lib/utils';
+import { useSubscriptions } from '@/context/SubscriptionContext';
 
 interface Plan {
     name: string;
     price: number;
 }
+
 
 const MOCK_PLANS: Record<string, Plan[]> = {
     netflix: [
@@ -35,10 +37,12 @@ interface AddSubscriptionModalProps {
 }
 
 export const AddSubscriptionModal = ({ isOpen, onClose }: AddSubscriptionModalProps) => {
+    const { addSubscription } = useSubscriptions();
     const [serviceName, setServiceName] = useState('');
     const [planName, setPlanName] = useState('');
     const [amount, setAmount] = useState('');
     const [nextPayment, setNextPayment] = useState('');
+
     
     // AI Analysis State
     const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -92,8 +96,16 @@ export const AddSubscriptionModal = ({ isOpen, onClose }: AddSubscriptionModalPr
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Here you would submit the data
-        console.log({ serviceName, planName, amount, nextPayment });
+        
+        addSubscription({
+            name: serviceName,
+            plan: planName,
+            amount: parseFloat(amount),
+            currency: 'USD',
+            nextPaymentDate: nextPayment || new Date().toISOString().split('T')[0],
+            category: 'Uncategorized'
+        });
+
         handleClose();
     };
 
