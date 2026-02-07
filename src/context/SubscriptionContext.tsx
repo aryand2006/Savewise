@@ -38,6 +38,33 @@ const INITIAL_SUBSCRIPTIONS: Subscription[] = [
       currency: 'USD',
       nextPaymentDate: '2026-02-10',
       category: 'Music'
+  },
+  {
+    id: '4',
+    name: 'OpenAI',
+    plan: 'ChatGPT Plus',
+    amount: 20.00,
+    currency: 'USD',
+    nextPaymentDate: '2026-02-18',
+    category: 'AI Tools'
+  },
+  {
+    id: '5',
+    name: 'Amazon Prime',
+    plan: 'Monthly',
+    amount: 14.99,
+    currency: 'USD',
+    nextPaymentDate: '2026-02-22',
+    category: 'Shopping'
+  },
+  {
+    id: '6',
+    name: 'Notion',
+    plan: 'Plus Plan',
+    amount: 10.00,
+    currency: 'USD',
+    nextPaymentDate: '2026-03-01',
+    category: 'Productivity'
   }
 ];
 
