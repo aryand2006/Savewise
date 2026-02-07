@@ -22,7 +22,10 @@ export const YieldVaultCard = () => {
                         Yield Vault™
                         <ShieldCheck size={14} className="text-emerald-400" />
                     </h3>
-                    <p className="text-xs text-gray-400 mt-0.5">Automated compounding</p>
+                    <p className="text-xs text-blue-400 mt-0.5 flex items-center gap-1 font-medium">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                        Run on XRP Ledger
+                    </p>
                 </div>
                 <div className="text-right">
                     <span className="text-emerald-400 font-bold bg-emerald-400/10 px-2.5 py-1 rounded-md text-sm border border-emerald-400/20">
@@ -34,11 +37,11 @@ export const YieldVaultCard = () => {
             {/* Detailed Breakdown */}
             <div className="grid grid-cols-2 gap-2 text-xs mb-6 p-3 bg-white/5 rounded-lg border border-white/5">
                 <div className="space-y-1">
-                    <span className="text-gray-400 block">Market Rate</span>
+                    <span className="text-gray-400 block">XRPL Validated Rate</span>
                     <span className="font-medium text-gray-200">4.50%</span>
                 </div>
                 <div className="space-y-1 border-l border-white/10 pl-3">
-                    <span className="text-gray-400 block">Savewise Plus</span>
+                    <span className="text-gray-400 block">Trust Line Boost</span>
                      <span className="font-medium text-emerald-400">+0.70% Boost</span>
                 </div>
             </div>

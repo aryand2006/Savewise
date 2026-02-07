@@ -12,6 +12,23 @@ We've reimagined the subscription manager—moving beyond simple tracking to act
 
 ## 🚀 Key Features
 
+#### **1. Day-to-Day Financial Intelligence (Visa Track)**
+*   **Daily Spend Tracker:** Real-time visual cards tracking daily essentials like Whole Foods and Starbucks.
+*   **Contextual Alerts:** Smart notifications that analyze spending patterns against historical averages (e.g., "15% higher usage this week").
+*   **Actionable Insights:** Direct advice on how to curb spending frequency without cutting lifestyle quality.
+
+#### **2. XRPL-Powered Yields (Ripple Track)**
+*   **XRP Ledger Integration:** The **Yield Vault™** simulates a connection to the XRP Ledger, utilizing "Trust Lines" to secure high-yield returns.
+*   **Transparent Validation:** Real-time breakdown of Market Rates vs. XRPL Trust Line Boosts (+0.70%), bringing transparency to DeFi yields.
+*   **Fast & Low Cost:** Leverages the speed and low transaction fees of the XRPL network for micro-compounding.
+
+#### **3. AI Decision Support (Conway Track)**
+*   **Proactive Analysis:** The system doesn't just display data; it makes decisions.
+*   **Confidence Scores:** "Should I prepay annually?" Our AI provides a detailed Matrix (Usage Freq, Churn Risk, Cashflow) with a definitive **Confidence Score** (e.g., "94% Match").
+*   **One-Click Optimization:** Seamlessly switch plans based on AI recommendations.
+
+### Core Features
+
 ### Yield Vault™ Technology
 *   **DeFi-Powered Yields:** We bridge the gap between traditional subscriptions and Decentralized Finance. Your prepaid funds are converted to stablecoins (USDC) and deployed into low-risk, blue-chip DeFi lending protocols (like Aave or Compound).
 *   **5.20% APY (Simulated):** By cutting out the middleman, you earn institutional-grade interest rates on money that would otherwise sit idle in a merchant's bank account.
