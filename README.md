@@ -10,7 +10,7 @@
 
 We've reimagined the subscription manager—moving beyond simple tracking to active financial optimization. Built with a stunning glassmorphism UI, it offers a seamless experience for managing usage, analyzing budgets, and optimizing wealth.
 
-## 🚀 Key Features
+## Key Features
 
 #### **1. Day-to-Day Financial Intelligence (Visa Track)**
 *   **Daily Spend Tracker:** Real-time visual cards tracking daily essentials like Whole Foods and Starbucks.
