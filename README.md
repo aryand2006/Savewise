@@ -19,6 +19,7 @@ We've reimagined the subscription manager—moving beyond simple tracking to act
 
 #### **2. XRPL-Powered Yields (Ripple Track)**
 *   **XRP Ledger Integration:** The **Yield Vault™** simulates a connection to the XRP Ledger, utilizing "Trust Lines" to secure high-yield returns.
+*   **Multi-Rail Funding:** Seamlessly fund your vault using **Apple Pay** (Fiat-to-Crypto onramp) or connect a **Crypto Wallet** standard to the XRPL.
 *   **Transparent Validation:** Real-time breakdown of Market Rates vs. XRPL Trust Line Boosts (+0.70%), bringing transparency to DeFi yields.
 *   **Fast & Low Cost:** Leverages the speed and low transaction fees of the XRPL network for micro-compounding.
 
@@ -37,6 +38,7 @@ We've reimagined the subscription manager—moving beyond simple tracking to act
 
 ### AI-Powered Management
 *   **Smart Plan Detection:** Just type "Hulu" and our AI agent automatically finding available plans and pricing tiers, saving you manual entry.
+*   **Instant Savings Projection:** Immediately after adding a subscription, the system calculates your "Potential Yield Offset" (e.g., "+$9.45/yr"), psychologically reinforcing the value of the Yield Vault.
 *   **Intelligent Insights:** receive proactive alerts about spending spikes, budget surpluses, and optimization opportunities (e.g., "Switching to Annual saves $45/yr").
 
 ### Intelligent Budget Planner

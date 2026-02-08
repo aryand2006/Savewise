@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
 import { AreaChart, Area, ResponsiveContainer, Tooltip } from 'recharts';
-import { TrendingUp, ShieldCheck } from 'lucide-react';
+import { TrendingUp, ShieldCheck, Plus } from 'lucide-react';
 
 const PERFORMANCE_DATA = [
   { day: 'Jan 1', value: 4.80 },
@@ -13,7 +14,11 @@ const PERFORMANCE_DATA = [
   { day: 'Feb 1', value: 5.20 },
 ];
 
-export const YieldVaultCard = () => {
+interface YieldVaultCardProps {
+    onDeposit?: () => void;
+}
+
+export const YieldVaultCard = ({ onDeposit }: YieldVaultCardProps) => {
     return (
         <Card className="relative overflow-hidden flex flex-col min-h-[320px]">
             <div className="flex justify-between items-start mb-4">
@@ -76,20 +81,30 @@ export const YieldVaultCard = () => {
                 </ResponsiveContainer>
             </div>
 
-             <div className="pt-4 border-t border-white/5 flex justify-between text-sm items-center">
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center ring-1 ring-emerald-500/20">
-                        <TrendingUp size={16} className="text-emerald-400" />
+            <div className="pt-4 border-t border-white/5 flex flex-col gap-4">
+                <div className="flex justify-between text-sm items-center">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center ring-1 ring-emerald-500/20">
+                            <TrendingUp size={16} className="text-emerald-400" />
+                        </div>
+                        <div>
+                             <p className="text-xs text-gray-400">Lifetime Earnings</p>
+                             <p className="font-bold text-white tracking-wide">+$1,240.50</p>
+                        </div>
                     </div>
-                    <div>
-                         <p className="text-xs text-gray-400">Lifetime Earnings</p>
-                         <p className="font-bold text-white tracking-wide">+$1,240.50</p>
+                    <div className="text-right">
+                        <p className="text-xs text-gray-400">Next Payout</p>
+                        <p className="font-medium text-white">Mar 01</p>
                     </div>
                 </div>
-                <div className="text-right">
-                    <p className="text-xs text-gray-400">Next Payout</p>
-                    <p className="font-medium text-white">Mar 01</p>
-                </div>
+                
+                <Button 
+                    size="sm" 
+                    className="w-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20"
+                    onClick={onDeposit}
+                >
+                    <Plus size={16} className="mr-2" /> Add Funds
+                </Button>
             </div>
         </Card>
     );

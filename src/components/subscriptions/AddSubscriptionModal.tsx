@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '@/components/ui/Modal';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { Sparkles, Loader2, Check } from 'lucide-react';
+import { Sparkles, Loader2, Check, ShieldCheck, TrendingUp, ArrowRight } from 'lucide-react';
 import { cn, formatCurrency } from '@/lib/utils';
 import { useSubscriptions } from '@/context/SubscriptionContext';
 
@@ -38,6 +38,7 @@ interface AddSubscriptionModalProps {
 
 export const AddSubscriptionModal = ({ isOpen, onClose }: AddSubscriptionModalProps) => {
     const { addSubscription } = useSubscriptions();
+    const [step, setStep] = useState<'form' | 'success'>('form');
     const [serviceName, setServiceName] = useState('');
     const [planName, setPlanName] = useState('');
     const [amount, setAmount] = useState('');
@@ -106,8 +107,59 @@ export const AddSubscriptionModal = ({ isOpen, onClose }: AddSubscriptionModalPr
             category: 'Uncategorized'
         });
 
-        handleClose();
+        setStep('success');
     };
+
+    if (step === 'success') {
+        const annualCost = parseFloat(amount) * 12;
+        const potentialYield = annualCost * 0.052; // 5.2% APY logic
+
+        return (
+            <Modal isOpen={isOpen} onClose={handleClose} title="Subscription Added">
+                <div className="flex flex-col items-center py-6 animate-in fade-in zoom-in duration-300">
+                    <div className="h-16 w-16 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6">
+                        <Check className="h-8 w-8 text-emerald-400" />
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold mb-2">{serviceName} Added</h3>
+                    <p className="text-gray-400 mb-8">{planName} • {formatCurrency(parseFloat(amount))}/mo</p>
+
+                    <div className="w-full bg-gradient-to-br from-indigo-900/40 to-purple-900/40 border border-indigo-500/20 rounded-xl p-4 mb-6">
+                        <div className="flex items-center gap-2 mb-3">
+                            <ShieldCheck size={18} className="text-emerald-400" />
+                            <span className="font-semibold text-sm text-white">Yield Vault™ Opportunity</span>
+                        </div>
+                        
+                        <div className="space-y-3">
+                            <div className="flex justify-between text-sm">
+                                <span className="text-gray-400">Projected Annual Cost</span>
+                                <span className="text-white font-medium">{formatCurrency(annualCost)}/yr</span>
+                            </div>
+                            <div className="flex justify-between text-sm bg-white/5 p-2 rounded-lg">
+                                <span className="text-gray-300 flex items-center gap-2">
+                                    <TrendingUp size={14} className="text-emerald-400" />
+                                    Potential Yield Savings
+                                </span>
+                                <span className="text-emerald-400 font-bold">+{formatCurrency(potentialYield)}/yr</span>
+                            </div>
+                            <p className="text-xs text-blue-300/80 mt-2 leading-relaxed">
+                                Tip: By funding your Yield Vault, you could offset ~5.2% of this bill automatically through XRPL DeFi yields.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-3 w-full">
+                        <Button variant="ghost" className="flex-1" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white" onClick={handleClose}>
+                            Go to Vault <ArrowRight size={16} className="ml-2" />
+                        </Button>
+                    </div>
+                </div>
+            </Modal>
+        );
+    }
 
     return (
         <Modal isOpen={isOpen} onClose={handleClose} title="Add New Subscription">

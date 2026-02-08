@@ -9,10 +9,12 @@ import { Button } from '@/components/ui/Button';
 import { Plus, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { AddSubscriptionModal } from '@/components/subscriptions/AddSubscriptionModal';
+import { AddFundsModal } from '@/components/dashboard/AddFundsModal';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isAddFundsOpen, setIsAddFundsOpen] = useState(false);
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
@@ -48,13 +50,18 @@ export const Dashboard = () => {
         </div>
         
         <div className="lg:col-span-1 space-y-8">
-            <YieldVaultCard />
+            <YieldVaultCard onDeposit={() => setIsAddFundsOpen(true)} />
         </div>
       </div>
 
       <AddSubscriptionModal 
         isOpen={isAddModalOpen} 
         onClose={() => setIsAddModalOpen(false)} 
+      />
+      
+      <AddFundsModal
+        isOpen={isAddFundsOpen}
+        onClose={() => setIsAddFundsOpen(false)}
       />
     </div>
   );
