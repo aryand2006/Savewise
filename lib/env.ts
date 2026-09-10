@@ -23,26 +23,14 @@ export function getEnvConfig(): EnvConfig {
   const gridEndpoint = process.env.EXPO_PUBLIC_GRID_ENDPOINT;
   const geminiApiKey = process.env.EXPO_PUBLIC_GEMINI_API_KEY;
 
-  // Validate required environment variables
-  if (!gridApiKey) {
-    throw new Error(
-      'GRID_API_KEY is required. Please set it in your .env file or environment variables.'
-    );
-  }
-
-  if (!geminiApiKey) {
-    throw new Error(
-      'EXPO_PUBLIC_GEMINI_API_KEY is required. Please set it in your .env file or environment variables.'
-    );
-  }
-
+  // Demo/production-safe: optional keys so the UI can ship without secrets.
   return {
     NODE_ENV: nodeEnv,
-    GRID_API_KEY: gridApiKey,
+    GRID_API_KEY: gridApiKey || 'demo',
     GRID_ENVIRONMENT: gridEnvironment,
     EXPO_PUBLIC_GRID_ENV: gridEnvironment,
     EXPO_PUBLIC_GRID_ENDPOINT: gridEndpoint,
-    EXPO_PUBLIC_GEMINI_API_KEY: geminiApiKey,
+    EXPO_PUBLIC_GEMINI_API_KEY: geminiApiKey || 'demo',
   };
 }
 
